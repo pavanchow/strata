@@ -1,0 +1,20 @@
+[package]
+name = "strata"
+version = "0.1.0"
+edition = "2021"
+description = "A from-scratch virtual file system living inside a single container file."
+authors = ["Pavan Nallamothu"]
+
+[[bin]]
+name = "strata"
+path = "src/main.rs"
+
+[lib]
+name = "strata"
+path = "src/lib.rs"
+
+[dependencies]
+clap = { version = "4", features = ["derive"] }
+
+[dev-dependencies]
+tempfile = "3"
