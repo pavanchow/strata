@@ -1,5 +1,5 @@
 use crate::error::{FsError, Result};
-use crate::layout::{INODE_KIND_DIR, INODE_KIND_FILE, INODE_KIND_FREE, NUM_DIRECT};
+use crate::layout::{INODE_KIND_DIR, INODE_KIND_FILE, INODE_KIND_FREE, MAX_FILE_SIZE, NUM_DIRECT};
 
 /// Fixed-size on-disk inode: a type tag, a byte size, and a flat array of
 /// direct block pointers. No indirect blocks, the maximum file size is the
@@ -80,11 +80,42 @@ impl Inode {
             return Err(FsError::CorruptSuperblock("invalid inode kind"));
         }
         let size = u64::from_le_bytes(buf[1..9].try_into().unwrap());
+        // An inode with only direct pointers cannot address more than
+        // NUM_DIRECT * BLOCK_SIZE bytes. Reject a larger stored size before any
+        // caller allocates from it, so a hostile image cannot force a
+        // capacity-overflow panic on read.
+        if size > MAX_FILE_SIZE {
+            return Err(FsError::CorruptSuperblock("inode size exceeds max file size"));
+        }
         let mut direct = [0u32; NUM_DIRECT];
         for (i, d) in direct.iter_mut().enumerate() {
             let off = 9 + i * 4;
             *d = u32::from_le_bytes(buf[off..off + 4].try_into().unwrap());
         }
         Ok(Inode { kind, size, direct })
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn rejects_inode_size_beyond_max_file_size() {
+        let mut buf = vec![0u8; INODE_SIZE];
+        buf[0] = INODE_KIND_FILE;
+        buf[1..9].copy_from_slice(&u64::MAX.to_le_bytes());
+        assert!(
+            matches!(Inode::from_bytes(&buf), Err(FsError::CorruptSuperblock(_))),
+            "a hostile inode size must be rejected, not allocated"
+        );
+    }
+
+    #[test]
+    fn accepts_inode_size_within_max() {
+        let mut buf = vec![0u8; INODE_SIZE];
+        buf[0] = INODE_KIND_FILE;
+        buf[1..9].copy_from_slice(&MAX_FILE_SIZE.to_le_bytes());
+        assert!(Inode::from_bytes(&buf).is_ok());
     }
 }
