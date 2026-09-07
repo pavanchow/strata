@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Strata: a file system in Rust, inside one container file</title>
+<link rel="icon" type="image/svg+xml" href="logo.svg">
 <meta name="description" content="Strata is a file system in Rust that lives entirely inside one container file: a superblock, a bitmap block allocator, inodes, and directory entries, all readable end to end. Try it live in your browser.">
 <meta name="author" content="Pavan Nallamothu (pavanchow)">
 <meta name="keywords" content="file system in Rust, virtual file system, superblock, block allocator, inodes, Rust systems programming, Pavan Nallamothu, pavanchow">
@@ -135,6 +136,7 @@
   </div></nav>
 
   <div id="demo" class="hero">
+    <img src="logo.svg" alt="Strata logo" width="72" height="72">
     <p class="eyebrow">Rust · single-file image · no unsafe tricks</p>
     <h1>A file system<br>you can read end to end.</h1>
     <p class="sub">Strata is a file system in Rust that lives entirely inside one container file. A superblock, a bitmap block allocator, inodes, and directory entries, small enough to hold in your head. Here is the real layout, running in your browser.</p>
@@ -143,6 +145,18 @@
       <a class="btn s" href="https://github.com/pavanchow/strata">View on GitHub</a>
     </div>
   </div>
+
+  <details style="max-width:940px;margin:26px auto 0;padding:0 28px">
+    <summary style="cursor:pointer;font-weight:600;font-size:15px">How to use this playground</summary>
+    <div style="margin-top:12px;color:#6a7080;font-size:15px;line-height:1.6">
+      Build a file system inside one in-memory image and watch the blocks and bitmap update live.
+      <ul style="margin:10px 0 0;padding-left:20px">
+        <li><b>Operations:</b> type a path like <code>/docs/notes.txt</code>, add contents, then press <b>mkdir</b>, <b>create file</b>, or <b>delete</b>.</li>
+        <li><b>Directory tree &amp; block usage:</b> the tree and the bitmap grid on the left reflect every allocation and free as it happens.</li>
+        <li><b>Reset image</b> starts from a fresh formatted image; <b>What just ran</b> logs each operation.</li>
+      </ul>
+    </div>
+  </details>
 
   <div id="try" class="stage">
     <div class="card">

@@ -1,3 +1,5 @@
+<img src="docs/logo.svg" alt="Strata logo" width="96">
+
 **Strata is a file system in Rust that lives entirely inside one container file.**
 
 A superblock, a bitmap block allocator, fixed-size inodes with direct block pointers, and directory entries mapping names to inodes, all inside a single image file you can open, read end to end, and understand in one sitting.

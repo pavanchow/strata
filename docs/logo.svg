@@ -1,0 +1,13 @@
+<svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Strata logo">
+  <rect x="22" y="26" width="84" height="20" rx="5" fill="#2f6fed"/>
+  <rect x="22" y="54" width="84" height="20" rx="5" fill="#3f8ae0"/>
+  <rect x="22" y="82" width="84" height="20" rx="5" fill="#63b3d6"/>
+  <g fill="#eaf2ff">
+    <rect x="30" y="32" width="8" height="8" rx="1.5"/>
+    <rect x="44" y="32" width="8" height="8" rx="1.5"/>
+    <rect x="30" y="60" width="8" height="8" rx="1.5"/>
+    <rect x="72" y="60" width="8" height="8" rx="1.5"/>
+    <rect x="58" y="88" width="8" height="8" rx="1.5"/>
+    <rect x="86" y="88" width="8" height="8" rx="1.5"/>
+  </g>
+</svg>
