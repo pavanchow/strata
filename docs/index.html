@@ -24,6 +24,7 @@
   "name": "Strata",
   "description": "Strata is a file system in Rust that lives entirely inside one container file: a superblock, a bitmap block allocator, fixed-size inodes, and directory entries mapping names to inodes.",
   "applicationCategory": "DeveloperApplication",
+  "softwareVersion": "0.1.0",
   "operatingSystem": "Cross-platform",
   "author": { "@type": "Person", "name": "Pavan Nallamothu" },
   "url": "https://pavanchow.github.io/strata/",
@@ -52,6 +53,7 @@
   nav .brand .gem{width:16px;height:16px;transform:rotate(45deg);border-radius:3px;background:linear-gradient(135deg,#d79a63,#a15c2d)}
   nav .links{display:flex;gap:26px;align-items:center}
   nav .links a{color:var(--ink);font-size:14.5px}
+  nav .v{color:var(--faint);font-family:var(--mono);font-size:12px}
   @media(max-width:640px){nav .links a:not(.gh){display:none}}
 
   .hero{padding:70px 0 30px;text-align:center}
@@ -130,8 +132,9 @@
   <nav><div class="row">
     <div class="brand"><img src="logo.svg" class="brandlogo" alt="" width="22" height="22">Strata</div>
     <div class="links">
-      <a href="#demo">Demo</a><a href="#how">How it works</a><a href="#layout">Layout</a>
+      <a href="#demo">Demo</a><a href="#how">How it works</a><a href="#layout">CLI</a><a href="#use">Use it</a>
       <a class="gh" href="https://github.com/pavanchow/strata">GitHub</a>
+      <span class="v">v0.1.0</span>
     </div>
   </div></nav>
 
@@ -213,16 +216,41 @@
   <section id="layout">
     <h2>Format an image from the command line.</h2>
     <p class="lead">The same allocator and inode table you just watched update, running on a real file on disk.</p>
-    <pre><span class="c"># format a 16 MiB image, make a directory, write a file</span>
-strata --img fs.img format --blocks 4096 --inodes 512
-strata --img fs.img mkdir /docs
-strata --img fs.img put ./notes.txt /docs/notes.txt
-strata --img fs.img ls /docs</pre>
+    <pre style="max-width:720px"><span class="c"># a 16 MiB image (4096 blocks x 4 KiB), a directory, a file, then read it back</span>
+<span class="c">$ strata --img fs.img format --blocks 4096 --inodes 512</span>
+formatted fs.img (4096 blocks, 512 inodes)
+<span class="c">$ strata --img fs.img mkdir /docs</span>
+created /docs
+<span class="c">$ strata --img fs.img put ./notes.txt /docs/notes.txt</span>
+wrote 40 bytes to /docs/notes.txt
+<span class="c">$ strata --img fs.img ls /docs</span>
+file        40  notes.txt
+<span class="c">$ strata --img fs.img get /docs/notes.txt ./out.txt</span>
+read 40 bytes from /docs/notes.txt
+<span class="c">$ strata --img fs.img ls /nope</span>
+strata: no such file or directory</pre>
     <div class="rows">
       <div class="r"><b>Robust by construction</b><p>Every block index and every inode index is checked against the validated superblock before it is used. No buffer is ever sized from a raw on-disk length field.</p></div>
       <div class="r"><b>Typed errors</b><p>A wrong-magic image, a truncated file, or a name that's too long comes back as a specific error value, not a panic and not a silent wrong answer.</p></div>
       <div class="r"><b>Real persistence</b><p>Everything written to the image is still there the next time it's opened, the same guarantee a real disk-backed file system makes.</p></div>
     </div>
+  </section>
+
+  <section id="use">
+    <h2>Six subcommands, one library, real tests.</h2>
+    <p class="lead">Every subcommand maps to one call on the <code>Strata</code> type, so the CLI and the library are the same code path.</p>
+    <div class="rows">
+      <div class="r"><b>format</b><p>Create a new empty image with a given block and inode count, for example <code>--blocks 4096 --inodes 512</code>.</p></div>
+      <div class="r"><b>mkdir, rm</b><p>Create a directory, or delete a file or empty directory. Removing a non-empty directory is a typed error, not a crash.</p></div>
+      <div class="r"><b>put, get</b><p>Copy a local file into the image and back out, bounded by the maximum file size the inode's direct pointers allow.</p></div>
+      <div class="r"><b>ls</b><p>List a directory, printing each entry's kind, size, and name from the directory's own data blocks.</p></div>
+      <div class="r"><b>Library API</b><p><code>Strata::format</code> and <code>Strata::open</code>, then <code>mkdir</code>, <code>write_file</code>, <code>read_file</code>, <code>list_dir</code>, and <code>remove</code>, each returning a typed <code>Result</code>.</p></div>
+      <div class="r"><b>Tests</b><p><code>cargo test</code> exercises formatting, allocation and free, path resolution, persistence across reopen, and the bounds checks that keep bad input from panicking.</p></div>
+    </div>
+    <pre style="max-width:720px"><span class="c"># build, test, and format an image</span>
+cargo build
+cargo test
+strata --img fs.img format --blocks 4096 --inodes 512</pre>
   </section>
 
   <noscript>
