@@ -3,34 +3,32 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Strata: a file system in Rust, inside one container file</title>
+<title>Strata: a file system in Rust in one file | Pavan Nallamothu</title>
 <link rel="icon" type="image/svg+xml" href="logo.svg">
-<meta name="description" content="Strata is a file system in Rust that lives entirely inside one container file: a superblock, a bitmap block allocator, inodes, and directory entries, all readable end to end. Try it live in your browser.">
-<meta name="author" content="Pavan Nallamothu (pavanchow)">
-<meta name="keywords" content="file system in Rust, virtual file system, superblock, block allocator, inodes, Rust systems programming, Pavan Nallamothu, pavanchow">
+<meta name="description" content="Strata is a file system in Rust that lives inside one container file: a superblock, a bitmap block allocator, inodes, and directory entries, readable end to end. By Pavan Nallamothu.">
+<meta name="keywords" content="Strata, file system in Rust, Rust file system, virtual file system, single-file file system, superblock, bitmap block allocator, inodes, directory entries, Rust systems programming, file system from scratch, storage engine, Pavan Nallamothu, pavanchow">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+<meta name="author" content="Pavan Nallamothu">
+<link rel="author" href="https://github.com/pavanchow">
 <link rel="canonical" href="https://pavanchow.github.io/strata/">
 
 <meta property="og:type" content="website">
-<meta property="og:title" content="Strata: a file system in Rust, inside one container file">
-<meta property="og:description" content="Strata is a file system in Rust that lives entirely inside one container file: a superblock, a bitmap block allocator, inodes, and directory entries. Try it live in your browser.">
+<meta property="og:site_name" content="Pavan Nallamothu">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Strata: a file system in Rust in one file">
+<meta property="og:description" content="A file system in Rust that lives inside one container file: a superblock, a bitmap block allocator, inodes, and directory entries. By Pavan Nallamothu.">
 <meta property="og:url" content="https://pavanchow.github.io/strata/">
-<meta property="og:site_name" content="Strata">
-<meta name="twitter:card" content="summary">
+<meta property="og:image" content="https://pavanchow.github.io/strata/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Strata by Pavan Nallamothu">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Strata: a file system in Rust in one file">
+<meta name="twitter:description" content="A file system in Rust that lives inside one container file: superblock, block allocator, inodes, and directory entries. By Pavan Nallamothu.">
+<meta name="twitter:image" content="https://pavanchow.github.io/strata/og-image.png">
 
 <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  "name": "Strata",
-  "description": "Strata is a file system in Rust that lives entirely inside one container file: a superblock, a bitmap block allocator, fixed-size inodes, and directory entries mapping names to inodes.",
-  "applicationCategory": "DeveloperApplication",
-  "softwareVersion": "0.1.0",
-  "operatingSystem": "Cross-platform",
-  "author": { "@type": "Person", "name": "Pavan Nallamothu" },
-  "url": "https://pavanchow.github.io/strata/",
-  "codeRepository": "https://github.com/pavanchow/strata",
-  "programmingLanguage": "Rust"
-}
+{"@context":"https://schema.org","@graph":[{"@type":"SoftwareApplication","@id":"https://pavanchow.github.io/strata/#software","name":"Strata","applicationCategory":"DeveloperApplication","operatingSystem":"Linux, macOS, Windows","softwareVersion":"0.1.0","description":"Strata is a file system in Rust that lives entirely inside one container file: a superblock, a bitmap block allocator, fixed-size inodes, and directory entries mapping names to inodes.","url":"https://pavanchow.github.io/strata/","image":"https://pavanchow.github.io/strata/og-image.png","programmingLanguage":"Rust","codeRepository":"https://github.com/pavanchow/strata","datePublished":"2026-08-21","author":{"@id":"https://github.com/pavanchow#person"},"publisher":{"@id":"https://github.com/pavanchow#person"},"keywords":"file system in Rust, single-file file system, superblock, bitmap block allocator, inodes, directory entries, Pavan Nallamothu","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Superblock describing the volume","Bitmap block allocator","Fixed-size inodes","Directory entries mapping names to inodes","Entire file system inside one container file"]},{"@type":"Person","@id":"https://github.com/pavanchow#person","name":"Pavan Nallamothu","alternateName":"pavanchow","url":"https://github.com/pavanchow","jobTitle":"Software Engineer and Security Researcher","knowsAbout":["Rust","file systems","systems programming","storage","data structures","operating systems"],"sameAs":["https://github.com/pavanchow","https://hackerone.com/pavanchow"]},{"@type":"WebSite","@id":"https://pavanchow.github.io/strata/#website","name":"Strata by Pavan Nallamothu","url":"https://pavanchow.github.io/strata/","author":{"@id":"https://github.com/pavanchow#person"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Pavan Nallamothu","item":"https://github.com/pavanchow"},{"@type":"ListItem","position":2,"name":"Strata","item":"https://pavanchow.github.io/strata/"}]},{"@type":"WebPage","url":"https://pavanchow.github.io/strata/","name":"Strata: a file system in Rust in one file | Pavan Nallamothu","isPartOf":{"@id":"https://pavanchow.github.io/strata/#website"},"about":{"@id":"https://pavanchow.github.io/strata/#software"},"inLanguage":"en","author":{"@id":"https://github.com/pavanchow#person"}}]}
 </script>
 
 <style>
@@ -123,10 +121,6 @@
   footer{padding:64px 0;border-top:1px solid var(--line);text-align:center;color:var(--muted)}
   footer .name{color:var(--ink);font-weight:600}
 </style>
-<link rel="author" href="https://github.com/pavanchow">
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Person","name":"Pavan Nallamothu","alternateName":"pavanchow","url":"https://github.com/pavanchow","sameAs":["https://github.com/pavanchow","https://hackerone.com/pavanchow"]}
-</script>
 </head>
 <body>
   <nav><div class="row">
@@ -263,6 +257,15 @@ strata --img fs.img format --blocks 4096 --inodes 512</pre>
     <p>A file system small enough to read end to end.</p>
     <p style="margin-top:12px"><a href="https://github.com/pavanchow/strata">github.com/pavanchow/strata</a></p>
     <p style="margin-top:12px">By <span class="name">Pavan Nallamothu</span>.</p>
+    <nav aria-label="More open-source tools by Pavan Nallamothu" style="margin-top:28px;font-size:14px;line-height:1.9">
+      <p style="font-weight:600;color:var(--ink);margin-bottom:8px">More open-source tools by Pavan Nallamothu</p>
+      <a href="https://pavanchow.github.io/keystone/">Keystone, an embedded key-value store in Rust</a> &middot;
+      <a href="https://pavanchow.github.io/flint/">Flint, a single-binary key-value store in Rust</a> &middot;
+      <a href="https://pavanchow.github.io/ledgerstone/">Ledgerstone, an embedded SQL database in Rust</a> &middot;
+      <a href="https://pavanchow.github.io/timelace/">Timelace, a content-addressed version control system in Rust</a> &middot;
+      <a href="https://pavanchow.github.io/archipelago/">Archipelago, a distributed file system in Rust</a> &middot;
+      <a href="https://github.com/pavanchow">All projects on GitHub</a>
+    </nav>
   </footer>
 
 <script>
