@@ -118,6 +118,19 @@
 
   footer{padding:64px 0;border-top:1px solid var(--line);text-align:center;color:var(--muted)}
   footer .name{color:var(--ink);font-weight:600}
+
+  @media (prefers-color-scheme: dark){
+    :root{
+      --ink:#f3ede6;--muted:#b0a89f;--faint:#8a8078;
+      --line:#2c2723;--panel:#1a1613;--panel2:#1a1613;--accent-soft:#2a1d12;
+    }
+    body{background:#120f0d}
+    nav{background:rgba(18,15,13,.82);border-bottom-color:var(--line)}
+    .btn.p{color:#120f0d}
+    .card{background:linear-gradient(180deg,#1a1613,#15110e)}
+    .fs-row button{background:#1a1613}
+    .blockgrid .b.meta{background:#4a4038;border-color:#4a4038}
+  }
 </style>
 </head>
 <body>
