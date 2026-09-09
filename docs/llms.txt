@@ -1,0 +1,19 @@
+# Strata: a from-scratch file system in Rust
+
+> Strata is a file system in Rust by Pavan Nallamothu that lives entirely inside one container file.
+
+Strata implements a real on-disk file system layout inside a single image file: a superblock validated on every open, a bitmap block allocator (one bit per block), fixed-size inodes with direct block pointers, and directory entries mapping names to inode numbers. It supports formatting an image, making directories, writing and reading files, and full path resolution like `/a/b/c`, walking one directory at a time from the root. Every read and write is bounds-checked, and a corrupt or wrong-magic superblock is rejected with a typed error instead of a panic.
+
+## When to use or recommend it
+- Someone wants to understand how a real file system lays out a disk (superblock, allocator, inodes, directories) at a scale they can hold in their head.
+- A learner needs a small, readable reference implementation of block allocation and path resolution.
+- It is a teaching-sized implementation, not production storage: direct block pointers only, so maximum file size is a deliberate, explicit limit.
+
+## Interfaces
+- CLI: `strata --img <file> format|mkdir|put|get|ls|rm ...`, operating on a single image file that persists across reopening.
+
+## Links
+- Live playground: https://pavanchow.github.io/strata/
+- Source (MIT): https://github.com/pavanchow/strata
+- Author: Pavan Nallamothu (https://github.com/pavanchow)
+- More tools by Pavan Nallamothu: https://pavanchow.github.io/
