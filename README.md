@@ -6,6 +6,8 @@ Strata is a file system written from scratch in Rust that lives entirely inside 
 
 **[Live demo](https://pavanchow.github.io/strata/)** · MIT licensed · written in Rust
 
+Built from scratch by [Pavan Nallamothu](https://pavanchow.github.io/) ([LinkedIn](https://www.linkedin.com/in/pavanchow/), [GitHub](https://github.com/pavanchow)).
+
 File systems feel like magic from the outside. Strata is small enough that it isn't. Format an image, make directories, write and read files, and every byte of that lives in one file on your disk, laid out the same way a real file system lays out a disk partition, just at a scale you can hold in your head.
 
 ## What it is
