@@ -1,3 +1,17 @@
 /target
 Cargo.lock
 /*.img
+
+# Never commit SSH, key, or credential material.
+.ssh/
+id_rsa*
+id_ed25519*
+id_ecdsa*
+.netrc
+.git-credentials
+*.pem
+*.key
+*.p12
+*.pfx
+.env
+.env.*
